@@ -1,9 +1,3 @@
-<script lang="ts">
-export default {
-  name: "dept"
-};
-</script>
-
 <script setup lang="ts">
 import dayjs from "dayjs";
 import { handleTree } from "/@/utils/tree";
@@ -12,6 +6,10 @@ import { FormInstance } from "element-plus";
 import { reactive, ref, onMounted } from "vue";
 import { EpTableProBar } from "/@/components/ReTable";
 import { useRenderIcon } from "/@/components/ReIcon/src/hooks";
+
+defineOptions({
+  name: "Dept"
+});
 
 const form = reactive({
   user: "",
@@ -163,7 +161,8 @@ onMounted(() => {
             <template #default="scope">
               <el-button
                 class="reset-margin"
-                type="text"
+                link
+                type="primary"
                 :size="size"
                 @click="handleUpdate(scope.row)"
                 :icon="useRenderIcon('edits')"
@@ -174,7 +173,8 @@ onMounted(() => {
                 <template #reference>
                   <el-button
                     class="reset-margin"
-                    type="text"
+                    link
+                    type="primary"
                     :size="size"
                     :icon="useRenderIcon('delete')"
                     @click="handleDelete(scope.row)"

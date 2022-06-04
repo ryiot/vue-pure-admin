@@ -12,7 +12,7 @@ export const useMultiTagsStore = defineStore({
     // 存储标签页信息（路由信息）
     multiTags: storageLocal.getItem("responsive-configure").multiTagsCache
       ? storageLocal.getItem("responsive-tags")
-      : routerArrays,
+      : [...routerArrays],
     multiTagsCache: storageLocal.getItem("responsive-configure").multiTagsCache
   }),
   getters: {
@@ -47,6 +47,7 @@ export const useMultiTagsStore = defineStore({
           {
             const tagVal = value as multiType;
             if (isUrl(tagVal?.name)) return;
+            if (tagVal?.meta?.title.length === 0) return;
             const tagPath = tagVal?.path;
             // 判断tag是否已存在
             const tagHasExits = this.multiTags.some(tag => {

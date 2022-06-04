@@ -82,5 +82,8 @@ menus:
   hsQrcode: Qrcode
   hsCascader: Area Cascader
   hsSwiper: Swiper Plugin
+  hsVirtualList: Virtual List
+  hsPdf: PDF Preview
+  hsExecl: Export Excel
 status:
   hsLoad: Loading...

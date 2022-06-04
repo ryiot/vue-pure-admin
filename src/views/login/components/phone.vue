@@ -21,9 +21,9 @@ const onLogin = async (formEl: FormInstance | undefined) => {
   if (!formEl) return;
   await formEl.validate((valid, fields) => {
     if (valid) {
-      // 模拟登陆请求，需根据实际开发进行修改
+      // 模拟登录请求，需根据实际开发进行修改
       setTimeout(() => {
-        message.success("登陆成功");
+        message.success("登录成功");
         loading.value = false;
       }, 2000);
     } else {
@@ -59,6 +59,9 @@ function onBack() {
             clearable
             v-model="ruleForm.verifyCode"
             placeholder="短信验证码"
+            :prefix-icon="
+              useRenderIcon('ri:shield-keyhole-line', { online: true })
+            "
           />
           <el-button
             :disabled="isDisabled"
@@ -80,7 +83,7 @@ function onBack() {
           :loading="loading"
           @click="onLogin(ruleFormRef)"
         >
-          登陆
+          登录
         </el-button>
       </el-form-item>
     </Motion>

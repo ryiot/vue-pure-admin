@@ -17,6 +17,10 @@ import { bg, avatar, currentWeek } from "./utils/static";
 import { ReImageVerify } from "/@/components/ReImageVerify";
 import { useRenderIcon } from "/@/components/ReIcon/src/hooks";
 
+defineOptions({
+  name: "Login"
+});
+
 const imgCode = ref("");
 const router = useRouter();
 const loading = ref(false);
@@ -45,7 +49,7 @@ const onLogin = async (formEl: FormInstance | undefined) => {
           accessToken: "eyJhbGciOiJIUzUxMiJ9.test"
         });
         initRouter("admin").then(() => {});
-        message.success("登陆成功");
+        message.success("登录成功");
         router.push("/");
       }, 2000);
     } else {
@@ -114,6 +118,9 @@ watch(imgCode, value => {
                 clearable
                 v-model="ruleForm.verifyCode"
                 placeholder="验证码"
+                :prefix-icon="
+                  useRenderIcon('ri:shield-keyhole-line', { online: true })
+                "
               >
                 <template v-slot:append>
                   <ReImageVerify v-model:code="imgCode" />
@@ -127,7 +134,8 @@ watch(imgCode, value => {
               <div class="w-full h-20px flex justify-between items-center">
                 <el-checkbox v-model="checked">记住密码</el-checkbox>
                 <el-button
-                  type="text"
+                  link
+                  type="primary"
                   @click="useUserStoreHook().SET_CURRENTPAGE(4)"
                 >
                   忘记密码?
@@ -171,7 +179,7 @@ watch(imgCode, value => {
               <span
                 v-for="(item, index) in thirdParty"
                 :key="index"
-                :title="`${item.title}登陆`"
+                :title="`${item.title}登录`"
               >
                 <IconifyIconOnline
                   :icon="`ri:${item.icon}-fill`"
@@ -182,9 +190,9 @@ watch(imgCode, value => {
             </div>
           </el-form-item>
         </Motion>
-        <!-- 手机号登陆 -->
+        <!-- 手机号登录 -->
         <phone v-if="currentPage === 1" />
-        <!-- 二维码登陆 -->
+        <!-- 二维码登录 -->
         <qrCode v-if="currentPage === 2" />
         <!-- 注册 -->
         <regist v-if="currentPage === 3" />
