@@ -1,15 +1,14 @@
 <script setup lang="ts">
 import { ref, reactive, unref } from "vue";
-import { templateRef } from "@vueuse/core";
-import SeamlessScroll from "/@/components/ReSeamlessScroll";
+import SeamlessScroll from "@/components/ReSeamlessScroll";
 
 defineOptions({
   name: "SeamlessScroll"
 });
 
-const scroll = templateRef<ElRef | null>("scroll", null);
+const scroll = ref();
 
-let listData = ref([
+const listData = ref([
   {
     title: "无缝滚动第一行无缝滚动第一行！！！！！！！！！！"
   },
@@ -39,20 +38,19 @@ let listData = ref([
   }
 ]);
 
-let classOption = reactive({
+const classOption = reactive({
   direction: "top"
 });
 
 function changeDirection(val) {
-  // @ts-ignore
-  unref(scroll).reset();
+  (unref(scroll) as any).reset();
   unref(classOption).direction = val;
 }
 </script>
 
 <template>
   <el-space wrap>
-    <el-card class="box-card">
+    <el-card class="box-card" shadow="never">
       <template #header>
         <div class="card-header">
           <span>无缝滚动示例</span>
@@ -127,8 +125,8 @@ function changeDirection(val) {
 <style lang="scss" scoped>
 .card-header {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
 
   span {
     margin-right: 20px;
@@ -136,23 +134,23 @@ function changeDirection(val) {
 }
 
 .warp {
-  height: 270px;
   width: 360px;
+  height: 270px;
   margin: 0 auto;
   overflow: hidden;
 
   ul {
-    list-style: none;
     padding: 0;
     margin: 0 auto;
+    list-style: none;
 
     li,
     a {
-      height: 30px;
-      line-height: 30px;
       display: flex;
       justify-content: space-between;
+      height: 30px;
       font-size: 15px;
+      line-height: 30px;
     }
   }
 }

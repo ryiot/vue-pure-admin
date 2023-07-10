@@ -1,6 +1,11 @@
-import { http } from "../utils/http";
+import { http } from "@/utils/http";
 
-// 地图数据
+type Result = {
+  success: boolean;
+  data: Array<any>;
+};
+
+/** 地图数据 */
 export const mapJson = (params?: object) => {
-  return http.request("get", "/getMapInfo", { params });
+  return http.request<Result>("get", "/getMapInfo", { params });
 };

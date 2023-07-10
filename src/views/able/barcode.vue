@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import ReBarcode from "/@/components/ReBarcode";
+import ReBarcode from "@/components/ReBarcode";
 
 defineOptions({
   name: "BarCode"
@@ -31,14 +31,14 @@ const barcodes = [
 
 <template>
   <div>
-    <el-card>
+    <el-card shadow="never">
       <template #header>
         <div class="font-medium">
           条形码（基于
           <el-link
             href="https://lindell.me/JsBarcode/"
             target="_blank"
-            style="font-size: 16px; margin: 0 5px 4px 0"
+            style="margin: 0 5px 4px 0; font-size: 16px"
           >
             JsBarcode
           </el-link>

@@ -1,29 +1,23 @@
 <script setup lang="ts">
-import { ElMessage } from "element-plus";
-import { debounce } from "/@/utils/debounce";
-import { useDebounceFn, useThrottleFn } from "@vueuse/core";
+import { message } from "@/utils/message";
+import { debounce, throttle } from "@pureadmin/utils";
 
 defineOptions({
   name: "Debounce"
 });
 
-const handle = () => {
-  ElMessage({
-    message: "恭喜你，这是一条成功消息",
-    type: "success"
-  });
-};
+const handle = () => message("恭喜你，这是一条成功消息", { type: "success" });
 
 const immediateDebounce = debounce(handle, 1000, true);
 
-const debounceClick = useDebounceFn(handle, 1000);
+const debounceClick = debounce(handle, 1000);
 
-const throttleClick = useThrottleFn(handle, 1000, false);
+const throttleClick = throttle(handle);
 </script>
 
 <template>
   <div>
-    <el-card class="mb-5">
+    <el-card class="mb-5" shadow="never">
       <template #header>
         <div>防抖：debounce</div>
       </template>
@@ -38,7 +32,7 @@ const throttleClick = useThrottleFn(handle, 1000, false);
         连续点击我，只会执行最后一次点击事件，延后执行
       </el-button>
     </el-card>
-    <el-card>
+    <el-card shadow="never">
       <template #header>
         <div>节流：throttle</div>
       </template>
@@ -52,5 +46,3 @@ const throttleClick = useThrottleFn(handle, 1000, false);
     </el-card>
   </div>
 </template>
-
-<style scoped></style>

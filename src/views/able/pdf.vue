@@ -1,28 +1,23 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { useI18n } from "vue-i18n";
-import VuePdfEmbed, {
-  type VuePdfEmbedMethods,
-  type VuePdfEmbedData
-} from "vue-pdf-embed";
+import VuePdfEmbed from "vue-pdf-embed";
 
 defineOptions({
   name: "Pdf"
 });
 
-interface pdfRefType extends VuePdfEmbedData, VuePdfEmbedMethods {}
-
 const { t } = useI18n();
-const pdfRef = ref<pdfRefType>();
-let pageCount = ref(1);
-let loading = ref(true);
-let currentPage = ref(1);
-let currentRotation = ref(0);
-let showAllPages = ref(false);
+const pdfRef = ref<any>();
+const pageCount = ref(1);
+const loading = ref(true);
+const currentPage = ref(1);
+const currentRotation = ref(0);
+const showAllPages = ref(false);
 const rotations = [0, 90, 180, 270];
 
 const source =
-  "https://pure-admin-doc.vercel.app/pdf/Cookie%E5%92%8CSession%E5%8C%BA%E5%88%AB%E7%94%A8%E6%B3%95.pdf";
+  "https://pure-admin.github.io/pure-admin-doc/pdf/Cookie%E5%92%8CSession%E5%8C%BA%E5%88%AB%E7%94%A8%E6%B3%95.pdf";
 
 const handleDocumentRender = () => {
   loading.value = false;
@@ -39,14 +34,14 @@ const onPrint = () => {
 </script>
 
 <template>
-  <el-card>
+  <el-card shadow="never">
     <template #header>
       <div class="font-medium">
         PDF预览（
         <el-link
           href="https://github.com/hrynko/vue-pdf-embed"
           target="_blank"
-          style="font-size: 16px; margin: 0 5px 4px 0"
+          style="margin: 0 5px 4px 0; font-size: 16px"
         >
           github地址
         </el-link>
@@ -73,7 +68,7 @@ const onPrint = () => {
             {{ currentPage }} / {{ pageCount }}
           </el-pagination>
         </div>
-        <div class="w-170px flex-bc">
+        <div class="w-[170px] flex-bc">
           <el-checkbox v-model="showAllPages" @change="showAllPagesChange">
             显示所有页面
           </el-checkbox>

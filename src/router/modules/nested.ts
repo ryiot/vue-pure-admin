@@ -1,14 +1,13 @@
-import { $t } from "/@/plugins/i18n";
-const Layout = () => import("/@/layout/index.vue");
+import { $t } from "@/plugins/i18n";
+import { nested } from "@/router/enums";
 
-const nestedRouter = {
+export default {
   path: "/nested",
-  component: Layout,
   redirect: "/nested/menu1/menu1-1",
   meta: {
     title: $t("menus.hsmenus"),
     icon: "histogram",
-    rank: 6
+    rank: nested
   },
   children: [
     {
@@ -21,7 +20,7 @@ const nestedRouter = {
       children: [
         {
           path: "/nested/menu1/menu1-1",
-          component: () => import("/@/views/nested/menu1/menu1-1/index.vue"),
+          component: () => import("@/views/nested/menu1/menu1-1/index.vue"),
           name: "Menu1-1",
           meta: {
             title: $t("menus.hsmenu1-1"),
@@ -39,7 +38,7 @@ const nestedRouter = {
             {
               path: "/nested/menu1/menu1-2/menu1-2-1",
               component: () =>
-                import("/@/views/nested/menu1/menu1-2/menu1-2-1/index.vue"),
+                import("@/views/nested/menu1/menu1-2/menu1-2-1/index.vue"),
               name: "Menu1-2-1",
               meta: {
                 title: $t("menus.hsmenu1-2-1"),
@@ -49,22 +48,19 @@ const nestedRouter = {
             {
               path: "/nested/menu1/menu1-2/menu1-2-2",
               component: () =>
-                import("/@/views/nested/menu1/menu1-2/menu1-2-2/index.vue"),
+                import("@/views/nested/menu1/menu1-2/menu1-2-2/index.vue"),
               name: "Menu1-2-2",
               meta: {
                 title: $t("menus.hsmenu1-2-2"),
                 keepAlive: true,
-                extraIcon: {
-                  svg: true,
-                  name: "team-iconxinpinrenqiwang"
-                }
+                extraIcon: "IF-pure-iconfont-new svg"
               }
             }
           ]
         },
         {
           path: "/nested/menu1/menu1-3",
-          component: () => import("/@/views/nested/menu1/menu1-3/index.vue"),
+          component: () => import("@/views/nested/menu1/menu1-3/index.vue"),
           name: "Menu1-3",
           meta: {
             title: $t("menus.hsmenu1-3"),
@@ -76,13 +72,11 @@ const nestedRouter = {
     {
       path: "/nested/menu2",
       name: "Menu2",
-      component: () => import("/@/views/nested/menu2/index.vue"),
+      component: () => import("@/views/nested/menu2/index.vue"),
       meta: {
         title: $t("menus.hsmenu2"),
         keepAlive: true
       }
     }
   ]
-};
-
-export default nestedRouter;
+} as RouteConfigsTable;

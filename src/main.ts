@@ -1,34 +1,32 @@
 import App from "./App.vue";
 import router from "./router";
-import { setupStore } from "/@/store";
+import { setupStore } from "@/store";
 import ElementPlus from "element-plus";
+import { useI18n } from "@/plugins/i18n";
 import { getServerConfig } from "./config";
 import { createApp, Directive } from "vue";
-import { useI18n } from "../src/plugins/i18n";
 import { MotionPlugin } from "@vueuse/motion";
-import VirtualScroller from "vue-virtual-scroller";
-import { useTable } from "../src/plugins/vxe-table";
-import { injectResponsiveStorage } from "/@/utils/storage/responsive";
+import { useEcharts } from "@/plugins/echarts";
+import { injectResponsiveStorage } from "@/utils/responsive";
 
-import "uno.css";
-import "animate.css";
+import Table from "@pureadmin/table";
+import PureDescriptions from "@pureadmin/descriptions";
+
 // 引入重置样式
 import "./style/reset.scss";
 // 导入公共样式
 import "./style/index.scss";
+// 一定要在main.ts中导入tailwind.css，防止vite每次hmr都会请求src/style/index.scss整体css文件导致热更新慢的问题
+import "./style/tailwind.css";
 import "element-plus/dist/index.css";
-import "@pureadmin/components/dist/index.css";
-import "@pureadmin/components/dist/theme.css";
 // 导入字体图标
 import "./assets/iconfont/iconfont.js";
 import "./assets/iconfont/iconfont.css";
-import "v-contextmenu/dist/themes/default.css";
-import "vue-virtual-scroller/dist/vue-virtual-scroller.css";
 
 const app = createApp(App);
 
 // 自定义指令
-import * as directives from "/@/directives";
+import * as directives from "@/directives";
 Object.keys(directives).forEach(key => {
   app.directive(key, (directives as { [key: string]: Directive })[key]);
 });
@@ -43,6 +41,10 @@ app.component("IconifyIconOffline", IconifyIconOffline);
 app.component("IconifyIconOnline", IconifyIconOnline);
 app.component("FontIcon", FontIcon);
 
+// 全局注册按钮级别权限组件
+import { Auth } from "@/components/ReAuth";
+app.component("Auth", Auth);
+
 getServerConfig(app).then(async config => {
   app.use(router);
   await router.isReady();
@@ -52,7 +54,8 @@ getServerConfig(app).then(async config => {
     .use(MotionPlugin)
     .use(useI18n)
     .use(ElementPlus)
-    .use(useTable)
-    .use(VirtualScroller);
+    .use(Table)
+    .use(PureDescriptions)
+    .use(useEcharts);
   app.mount("#app");
 });

@@ -1,81 +1,81 @@
 <script setup lang="ts">
-import { ECharts } from "echarts";
-import echarts from "/@/plugins/echarts";
-import { onBeforeMount, onMounted, nextTick } from "vue";
-import { useEventListener, tryOnUnmounted, useTimeoutFn } from "@vueuse/core";
+import { ref, computed, watch, type Ref } from "vue";
+import { useAppStoreHook } from "@/store/modules/app";
+import {
+  delay,
+  useDark,
+  useECharts,
+  type EchartOptions
+} from "@pureadmin/utils";
 
-let echartInstance: ECharts;
+const { isDark } = useDark();
 
-const props = defineProps({
-  index: {
-    type: Number,
-    default: 0
-  }
+const theme: EchartOptions["theme"] = computed(() => {
+  return isDark.value ? "dark" : "light";
 });
 
-function initechartInstance() {
-  const echartDom = document.querySelector(".pie" + props.index);
-  if (!echartDom) return;
-  // @ts-ignore
-  echartInstance = echarts.init(echartDom);
-  echartInstance.clear(); //清除旧画布 重新渲染
+const pieChartRef = ref<HTMLDivElement | null>(null);
+const { setOptions, resize } = useECharts(pieChartRef as Ref<HTMLDivElement>, {
+  theme
+});
 
-  echartInstance.setOption({
+setOptions(
+  {
     tooltip: {
       trigger: "item"
     },
     legend: {
-      orient: "vertical",
+      icon: "circle",
+      //@ts-expect-error
       right: true
     },
     series: [
       {
         name: "Github信息",
         type: "pie",
-        radius: "60%",
+        top: "20%",
+        radius: "80%",
         center: ["40%", "50%"],
+        color: ["#e6a23c", "#f56c6c", "#53a7ff"],
         data: [
-          { value: 1079, name: "watchers" },
-          { value: 1079, name: "star" },
-          { value: 204, name: "forks" },
-          { value: 3, name: "open_issues" }
-        ],
-        emphasis: {
-          itemStyle: {
-            shadowBlur: 10,
-            shadowOffsetX: 0,
-            shadowColor: "rgba(0, 0, 0, 0.5)"
-          }
-        }
+          { value: 400, name: "watchers" },
+          { value: 1600, name: "forks" },
+          { value: 7200, name: "star" }
+        ]
+        // emphasis: {
+        //   itemStyle: {
+        //     shadowBlur: 10,
+        //     shadowOffsetX: 0,
+        //     shadowColor: "rgba(0, 0, 0, 0.5)"
+        //   }
+        // }
       }
     ]
-  });
-}
+  },
+  {
+    name: "click",
+    callback: params => {
+      console.log("click", params);
+    }
+  },
+  // 点击空白处
+  {
+    type: "zrender",
+    name: "click",
+    callback: params => {
+      console.log("点击空白处", params);
+    }
+  }
+);
 
-onBeforeMount(() => {
-  nextTick(() => {
-    initechartInstance();
-  });
-});
-
-onMounted(() => {
-  nextTick(() => {
-    useEventListener("resize", () => {
-      if (!echartInstance) return;
-      useTimeoutFn(() => {
-        echartInstance.resize();
-      }, 180);
-    });
-  });
-});
-
-tryOnUnmounted(() => {
-  if (!echartInstance) return;
-  echartInstance.dispose();
-  echartInstance = null;
-});
+watch(
+  () => useAppStoreHook().getSidebarStatus,
+  () => {
+    delay(600).then(() => resize());
+  }
+);
 </script>
 
 <template>
-  <div :class="'pie' + props.index" style="width: 100%; height: 35vh" />
+  <div ref="pieChartRef" style="width: 100%; height: 35vh" />
 </template>

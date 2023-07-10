@@ -1,54 +1,70 @@
 <h1>vue-pure-admin</h1>
 
-![GitHub license](https://img.shields.io/github/license/xiaoxian521/vue-pure-admin?style=flat)
-![GitHub stars](https://img.shields.io/github/stars/xiaoxian521/vue-pure-admin?color=fa6470&style=flat)
-![GitHub forks](https://img.shields.io/github/forks/xiaoxian521/vue-pure-admin?style=flat)
+![GitHub license](https://img.shields.io/github/license/pure-admin/vue-pure-admin?style=flat)
+![GitHub stars](https://img.shields.io/github/stars/pure-admin/vue-pure-admin?color=fa6470&style=flat)
+![GitHub forks](https://img.shields.io/github/forks/pure-admin/vue-pure-admin?style=flat)
 
 **中文** | [English](./README.en-US.md)
 
 ## 简介
 
-vue-pure-admin 是一个免费开源的中后台模版。使用了最新的`vue3` `vite2` `Element-Plus` `TypeScript`等主流技术开发，开箱即用的中后台前端解决方案，也可用于学习参考。
+`vue-pure-admin` 是一款开源免费且开箱即用的中后台管理系统模版。使用了最新的 `Vue3`、`Vite`、`Element-Plus`、`TypeScript`、`Pinia`、`Tailwindcss` 等主流技术开发
+
+## 精简版（实际项目开发请用精简版，提供 `非国际化` 、`国际化` 两个版本选择）
+
+精简版是基于 [vue-pure-admin](https://github.com/pure-admin/vue-pure-admin) 提炼出的架子，包含主体功能，更适合实际项目开发，打包后的大小在全局引入 [element-plus](https://element-plus.org) 的情况下仍然低于 `2.3MB`，并且会永久同步完整版的代码。开启 `brotli` 压缩和 `cdn` 替换本地库模式后，打包大小低于 `350kb`
+
+- [点我查看非国际化精简版](https://github.com/pure-admin/pure-admin-thin)
+- [点我查看国际化精简版](https://github.com/pure-admin/pure-admin-thin/tree/i18n)
 
 ## 配套视频
 
-- [点我查看教程](https://www.bilibili.com/video/BV1534y1S7HV)
+- [点我查看快速开发教程](https://www.bilibili.com/video/BV1kg411v7QT)
 - [点我查看 UI 设计](https://www.bilibili.com/video/BV17g411T7rq)
 
-## 配套文档
+## 配套保姆级文档
 
-- [点我查看文档](https://pure-admin-doc.vercel.app)
+- [查看文档](https://yiming_chang.gitee.io/pure-admin-doc)
 
-## 精简版
+## `Tauri` 版
 
-- [点我查看精简版](https://github.com/xiaoxian521/pure-admin-thin)
+- [点我查看 Tauri 版](https://github.com/pure-admin/tauri-pure-admin)
 
-## Tauri 版
+## `Electron` 版
 
-- [点我查看 Tauri 版](https://github.com/xiaoxian521/tauri-pure-admin)
+- [点我查看 Electron 版](https://github.com/pure-admin/electron-pure-admin)
 
 ## 预览
 
-- [vue-pure-admin](https://vue-pure-admin.vercel.app)
+- [查看预览](https://yiming_chang.gitee.io/vue-pure-admin)
 
+- PC 端
 <p align="center">
-  <img alt="PureAdmin Logo" width="100%" src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/b4857fc7eb7d4c0f8deeefc644c1f7dd~tplv-k3u1fbpfcp-watermark.awebp?">
-  <img alt="PureAdmin Logo" width="100%" src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/549c3184697f4d268a78c9833e5ec2ea~tplv-k3u1fbpfcp-watermark.awebp?">
-  <img alt="PureAdmin Logo" width="100%" src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/381fc957fac143db9f06efdd389d88a3~tplv-k3u1fbpfcp-watermark.awebp?">
+  <img alt="PureAdmin Logo" width="100%" src="https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/d45c15ccbe674fe291a4faa528d11eda~tplv-k3u1fbpfcp-zoom-in-crop-mark:3024:0:0:0.awebp?">
 </p>
 
-### 使用 Gitpod
+- 暗黑模式
+<p align="center">
+  <img alt="PureAdmin Logo" width="100%" src="https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/10a351f0d9c94b90ba3b408a786b9ede~tplv-k3u1fbpfcp-zoom-in-crop-mark:3024:0:0:0.awebp?">
+</p>
+
+- 移动端
+<p align="center">
+  <img alt="PureAdmin Logo" width="100%" src="https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/3061c7b92f6d4cb4bcdf227d966ac696~tplv-k3u1fbpfcp-zoom-in-crop-mark:3024:0:0:0.awebp?">
+</p>
+
+### 使用 `Gitpod`
 
 在 Gitpod（适用于 GitHub 的免费在线开发环境）中打开项目，并立即开始编码.
 
-[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/xiaoxian521/vue-pure-admin)
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/pure-admin/vue-pure-admin)
 
 ## 安装使用
 
 - 获取项目代码
 
 ```bash
-git clone https://github.com/xiaoxian521/vue-pure-admin.git
+git clone https://github.com/pure-admin/vue-pure-admin.git
 or
 git clone https://gitee.com/yiming_chang/vue-pure-admin.git
 ```
@@ -74,23 +90,45 @@ pnpm serve
 pnpm build
 ```
 
+## Docker 支持
+
+1. 自定义镜像名为 `vue-pure-admin` 的镜像（请注意下面命令末尾有一个点 `.` 表示使用当前路径下的 `Dockerfile` 文件，可根据实际情况指定路径）
+
+```bash
+docker build -t vue-pure-admin .
+```
+
+2. 端口映射并启动 `docker` 容器（`8080:80`：表示在容器中使用 `80` 端口，并将该端口转发到主机的 `8080` 端口；`pure-admin`：表示自定义容器名；`vue-pure-admin`：表示自定义镜像名）
+
+```bash
+docker run -dp 8080:80  --name pure-admin vue-pure-admin
+```
+
+操作完上面两个命令后，在浏览器打开 `http://localhost:8080` 即可预览
+
+当然也可以通过 [Docker Desktop](https://www.docker.com/products/docker-desktop/) 可视化界面去操作 `docker` 项目，如下图
+
+<p align="center">
+  <img alt="docker" width="100%" src="https://yiming_chang.gitee.io/pure-admin-doc/img/docker/1.jpg">
+</p>
+
 ## 更新日志
 
 [CHANGELOG](./CHANGELOG.zh_CN.md)
 
 ## 如何贡献
 
-非常欢迎你的加入！[提一个 Issue](https://github.com/xiaoxian521/vue-pure-admin/issues/new/choose) 或者提交一个 Pull Request
+非常欢迎您的加入！[提一个 Issue](https://github.com/pure-admin/vue-pure-admin/issues/new/choose) 或者提交一个 `Pull Request`
 
 **Pull Request:**
 
 1. Fork 代码!
 2. 创建自己的分支: `git checkout -b feat/xxxx`
-3. 提交你的修改: `git commit -am 'feat(function): add xxxxx'`
+3. 提交您的修改: `git commit -am 'feat(function): add xxxxx'`
 4. 推送您的分支: `git push origin feat/xxxx`
 5. 提交`pull request`
 
-## Git 贡献提交规范
+## `Git` 贡献提交规范
 
 - 参考 [vue](https://github.com/vuejs/vue/blob/dev/.github/COMMIT_CONVENTION.md) 规范 ([Angular](https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog-angular))
 
@@ -110,9 +148,9 @@ pnpm build
 
 ## 浏览器支持
 
-本地开发推荐使用`Chrome 80+` 浏览器
+本地开发推荐使用 `Chrome 80+` 浏览器
 
-支持现代浏览器, 不支持 IE
+支持现代浏览器, 不支持 `IE`
 
 | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/edge/edge_48x48.png" alt=" Edge" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>IE | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/edge/edge_48x48.png" alt=" Edge" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Edge | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/firefox/firefox_48x48.png" alt="Firefox" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Firefox | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/chrome/chrome_48x48.png" alt="Chrome" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Chrome | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/safari/safari_48x48.png" alt="Safari" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Safari |
 | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
@@ -122,34 +160,20 @@ pnpm build
 
 [xiaoxian521](https://github.com/xiaoxian521)、[Ten-K](https://github.com/Ten-K)
 
-## 捐赠
-
-如果你觉得这个项目对您有帮助，可以帮作者买一杯果汁 🍹 表示支持
-
-<img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/f69bf13c5b854ed5b699807cafa0e3ce~tplv-k3u1fbpfcp-zoom-in-crop-mark:1304:0:0:0.awebp?" width="150px" height="150px" />
-
-## QQ 交流群
-
-群里严禁`黄`、`赌`、`毒`、`vpn`等违法行为！
-
-<img src="https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/f0697596aec84661b724f6eebdf8db17~tplv-k3u1fbpfcp-watermark.awebp?" width="150px" height="225px" />
-
 ## 许可证
 
-原则上不收取任何费用及版权，可以放心使用，不过如需二次开源（比如用此平台二次开发并开源）请联系作者获取许可！
+原则上不收取任何费用及版权，可商用，不过如需二次开源（比如用此平台二次开发并开源，要求前端代码必须开源免费）请联系作者获取许可！（免费，走个记录而已）
 
-[MIT © xiaoxian521-2020](./LICENSE)
+[MIT © 2020-present, pure-admin](./LICENSE)
 
-## 捐赠者
+## `Star`
 
-非常感谢你们的支持，相信项目会越来越好 :heart:
+非常感谢留下星星的好心人，感谢您的支持 :heart:
 
-|                                                                xueyuheng                                                                 |                                                                taolei1990                                                                 |                                                                hang-kim                                                                 |                                                               madwolfcrazy                                                                |                                                                limuen                                                                 |                                                                BenLakes                                                                 |                                                                mollerzhu                                                                 |
-| :--------------------------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------------------------------: |
-| <a href="https://github.com/xueyuheng"><img src="https://avatars.githubusercontent.com/u/48202935?v=4" width="60px" height="60px" /></a> | <a href="https://github.com/taolei1990"><img src="https://avatars.githubusercontent.com/u/23173640?v=4" width="60px" height="60px" /></a> | <a href="https://github.com/hang-kim"><img src="https://avatars.githubusercontent.com/u/52914259?v=4" width="60px" height="60px" /></a> | <a href="https://github.com/madwolfcrazy"><img src="https://avatars.githubusercontent.com/u/223671?v=4" width="60px" height="60px" /></a> | <a href="https://github.com/limuen"><img src="https://avatars.githubusercontent.com/u/31790606?v=4" width="60px" height="60px" /></a> | <a href="https://github.com/BenLakes"><img src="https://avatars.githubusercontent.com/u/15206046?v=4" width="60px" height="60px" /></a> | <a href="https://github.com/mollerzhu"><img src="https://avatars.githubusercontent.com/u/49627902?v=4" width="60px" height="60px" /></a> |
+[![Stargazers for vue-pure-admin](https://reporoster.com/stars/pure-admin/vue-pure-admin)](https://github.com/pure-admin/vue-pure-admin/stargazers)
 
-## 贡献者
+## `Fork`
 
-这个项目的存在感谢所有做出贡献的人 :heart:
+瞧，那些 `小哥哥` 、`小姐姐` 认真 `学习` 的样子真滴是 `哎呦不错哦` :heart:
 
-<a href="https://github.com/xiaoxian521/vue-pure-admin/graphs/contributors"><img src="https://contrib.rocks/image?repo=xiaoxian521/vue-pure-admin" /></a>
+[![Forkers repo roster for vue-pure-admin](https://reporoster.com/forks/pure-admin/vue-pure-admin)](https://github.com/pure-admin/vue-pure-admin/network/members)

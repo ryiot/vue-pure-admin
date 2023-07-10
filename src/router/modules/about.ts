@@ -1,25 +1,21 @@
-import { $t } from "/@/plugins/i18n";
-const Layout = () => import("/@/layout/index.vue");
+import { $t } from "@/plugins/i18n";
+import { about } from "@/router/enums";
 
-const aboutRouter = {
+export default {
   path: "/about",
-  component: Layout,
   redirect: "/about/index",
   meta: {
-    icon: "question-line",
     title: $t("menus.hsAbout"),
-    rank: 15
+    rank: about
   },
   children: [
     {
       path: "/about/index",
       name: "About",
-      component: () => import("/@/views/about/index.vue"),
+      component: () => import("@/views/about/index.vue"),
       meta: {
         title: $t("menus.hsAbout")
       }
     }
   ]
-};
-
-export default aboutRouter;
+} as RouteConfigsTable;

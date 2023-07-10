@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import splitpane, { ContextProps } from "/@/components/ReSplitPane";
+import splitpane, { ContextProps } from "@/components/ReSplitPane";
 import { reactive } from "vue";
 
 defineOptions({
@@ -20,7 +20,7 @@ const settingTB: ContextProps = reactive({
 </script>
 
 <template>
-  <el-card>
+  <el-card shadow="never">
     <template #header>
       <div class="card-header">
         <span class="font-medium">切割面板组件</span>
@@ -57,9 +57,9 @@ $H: 70vh;
 .split-pane {
   width: 70vw;
   height: $H;
-  text-align: center;
   font-size: 50px;
   color: #fff;
+  text-align: center;
   border: 1px solid #e5e6eb;
 
   .dv-a,
@@ -67,8 +67,8 @@ $H: 70vh;
   .dv-c {
     width: $W;
     height: $W;
-    color: rgba($color: dodgerblue, $alpha: 0.8);
     line-height: $H;
+    color: rgba($color: dodgerblue, $alpha: 80%);
   }
 
   .dv-b,
@@ -77,11 +77,11 @@ $H: 70vh;
   }
 
   .dv-b {
-    color: rgba($color: #000, $alpha: 0.8);
+    color: rgba($color: #000, $alpha: 80%);
   }
 
   .dv-c {
-    color: rgba($color: #ce272d, $alpha: 0.8);
+    color: rgba($color: #ce272d, $alpha: 80%);
   }
 }
 </style>

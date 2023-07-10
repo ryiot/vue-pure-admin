@@ -2,7 +2,6 @@
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import type { SwiperOptions } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import SwiperCore, { Autoplay, Navigation, Pagination } from "swiper";
 
@@ -10,27 +9,9 @@ defineOptions({
   name: "Swiper"
 });
 
-type SwiperExampleOptions = Pick<
-  SwiperOptions,
-  | "navigation"
-  | "pagination"
-  | "scrollbar"
-  | "slidesPerView"
-  | "slidesPerGroup"
-  | "spaceBetween"
-  | "direction"
-  | "loop"
-  | "loopFillGroupWithBlank"
-  | "autoplay"
->;
-interface SwiperExample {
-  id: number;
-  label: string;
-  options: Partial<SwiperExampleOptions>;
-}
 SwiperCore.use([Autoplay, Navigation, Pagination]);
 
-const swiperExample: SwiperExample[] = [
+const swiperExample: any[] = [
   { id: 0, label: "Default", options: {} },
   {
     id: 1,
@@ -103,14 +84,14 @@ const swiperExample: SwiperExample[] = [
 </script>
 
 <template>
-  <el-card>
+  <el-card shadow="never">
     <template #header>
       <div class="font-medium">
         Swiper插件（
         <el-link
           href="https://github.com/nolimits4web/swiper"
           target="_blank"
-          style="font-size: 16px; margin: 0 5px 4px 0"
+          style="margin: 0 5px 4px 0; font-size: 16px"
         >
           github地址
         </el-link>
@@ -119,11 +100,11 @@ const swiperExample: SwiperExample[] = [
     </template>
     <el-row :gutter="10">
       <el-col v-for="item in swiperExample" :key="item.id" :span="12">
-        <h3 class="py-24px text-24px font-bold">{{ item.label }}</h3>
+        <h6 class="py-[24px] text-[24px] font-bold">{{ item.label }}</h6>
         <swiper v-bind="item.options">
           <swiper-slide v-for="i in 5" :key="i">
             <div
-              class="flex justify-center items-center h-240px border-1px border-[#999] text-18px font-bold"
+              class="flex justify-center items-center h-[240px] border-[1px] border-[#999] text-[18px] font-bold"
             >
               Slide{{ i }}
             </div>

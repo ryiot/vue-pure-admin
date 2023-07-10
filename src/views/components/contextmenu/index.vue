@@ -2,6 +2,7 @@
 import basic from "./basic.vue";
 import menuGroup from "./menuGroup.vue";
 import menuDynamic from "./menuDynamic.vue";
+import "v-contextmenu/dist/themes/default.css";
 
 defineOptions({
   name: "ContextMenu"
@@ -9,7 +10,7 @@ defineOptions({
 </script>
 
 <template>
-  <el-card>
+  <el-card shadow="never">
     <template #header>
       <div class="card-header">
         <span class="font-medium">右键菜单组件</span>

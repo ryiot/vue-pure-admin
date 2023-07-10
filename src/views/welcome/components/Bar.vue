@@ -1,26 +1,27 @@
 <script setup lang="ts">
-import { ECharts } from "echarts";
-import echarts from "/@/plugins/echarts";
-import { onBeforeMount, onMounted, nextTick } from "vue";
-import { useEventListener, tryOnUnmounted, useTimeoutFn } from "@vueuse/core";
+import { ref, computed, watch, type Ref } from "vue";
+import { useAppStoreHook } from "@/store/modules/app";
+import {
+  delay,
+  useDark,
+  useECharts,
+  type EchartOptions
+} from "@pureadmin/utils";
+import * as echarts from "echarts/core";
 
-let echartInstance: ECharts;
+const { isDark } = useDark();
 
-const props = defineProps({
-  index: {
-    type: Number,
-    default: 0
-  }
+const theme: EchartOptions["theme"] = computed(() => {
+  return isDark.value ? "dark" : "light";
 });
 
-function initechartInstance() {
-  const echartDom = document.querySelector(".bar" + props.index);
-  if (!echartDom) return;
-  // @ts-ignore
-  echartInstance = echarts.init(echartDom);
-  echartInstance.clear(); //清除旧画布 重新渲染
+const barChartRef = ref<HTMLDivElement | null>(null);
+const { setOptions, resize } = useECharts(barChartRef as Ref<HTMLDivElement>, {
+  theme
+});
 
-  echartInstance.setOption({
+setOptions(
+  {
     tooltip: {
       trigger: "axis",
       axisPointer: {
@@ -28,9 +29,13 @@ function initechartInstance() {
       }
     },
     grid: {
-      bottom: "20%",
-      height: "68%",
-      containLabel: true
+      bottom: "20px",
+      right: "10px"
+    },
+    legend: {
+      //@ts-expect-error
+      right: true,
+      data: ["watchers", "fork", "star"]
     },
     xAxis: [
       {
@@ -43,48 +48,90 @@ function initechartInstance() {
           // width: "70",
           // overflow: "truncate"
         },
-        data: ["open_issues", "forks", "watchers", "star"]
+        data: ["2021", "2022", "2023"],
+        triggerEvent: true
       }
     ],
     yAxis: [
       {
-        type: "value"
+        type: "value",
+        triggerEvent: true
       }
     ],
     series: [
       {
-        name: "GitHub信息",
+        name: "watchers",
         type: "bar",
-        data: [3, 204, 1079, 1079]
+        barWidth: "15%",
+        itemStyle: {
+          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+            {
+              offset: 0,
+              color: "#e6a23c"
+            },
+            {
+              offset: 1,
+              color: "#eebe77"
+            }
+          ])
+        },
+        data: [200, 320, 800]
+      },
+      {
+        name: "fork",
+        type: "bar",
+        barWidth: "15%",
+        itemStyle: {
+          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+            {
+              offset: 0,
+              color: "#f56c6c"
+            },
+            {
+              offset: 1,
+              color: "#f89898"
+            }
+          ])
+        },
+        data: [1600, 2460, 4500]
+      },
+      {
+        name: "star",
+        type: "bar",
+        barWidth: "15%",
+        itemStyle: {
+          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+            {
+              offset: 0,
+              color: "#409EFF"
+            },
+            {
+              offset: 1,
+              color: "#53a7ff"
+            }
+          ])
+        },
+        data: [1450, 3620, 7500]
       }
-    ]
-  });
-}
+    ],
+    addTooltip: true
+  },
+  {
+    name: "click",
+    callback: params => {
+      console.log("click", params);
+    }
+  }
+);
 
-onBeforeMount(() => {
-  nextTick(() => {
-    initechartInstance();
-  });
-});
-
-onMounted(() => {
-  nextTick(() => {
-    useEventListener("resize", () => {
-      if (!echartInstance) return;
-      useTimeoutFn(() => {
-        echartInstance.resize();
-      }, 180);
-    });
-  });
-});
-
-tryOnUnmounted(() => {
-  if (!echartInstance) return;
-  echartInstance.dispose();
-  echartInstance = null;
-});
+watch(
+  () => useAppStoreHook().getSidebarStatus,
+  () => {
+    delay(600).then(() => resize());
+  }
+);
 </script>
 
 <template>
-  <div :class="'bar' + props.index" style="width: 100%; height: 35vh" />
+  <div ref="barChartRef" style="width: 100%; height: 35vh" />
 </template>

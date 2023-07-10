@@ -14,19 +14,20 @@ export type appType = {
   sidebar: {
     opened: boolean;
     withoutAnimation: boolean;
-    // 判断是否手动点击Hamburger
-    isClickHamburger: boolean;
+    // 判断是否手动点击Collapse
+    isClickCollapse: boolean;
   };
   layout: string;
   device: string;
+  sortSwap: boolean;
 };
 
 export type multiType = {
   path: string;
-  parentPath: string;
   name: string;
   meta: any;
   query?: object;
+  params?: object;
 };
 
 export type setType = {
@@ -36,8 +37,8 @@ export type setType = {
 };
 
 export type userType = {
-  token: string;
-  name?: string;
+  username?: string;
+  roles?: Array<string>;
   verifyCode?: string;
   currentPage?: number;
 };

@@ -6,12 +6,12 @@ defineOptions({
   name: "Menu1-3"
 });
 
-let input = ref("");
+const input = ref("");
 const { t } = useI18n();
 </script>
 
 <template>
-  <div>
+  <div class="dark:text-white">
     <p>{{ t("menus.hsmenu1") }}</p>
     <p style="text-indent: 2em">{{ t("menus.hsmenu1-3") }}</p>
     <el-input v-model="input" />

@@ -1,13 +1,18 @@
 <script setup lang="ts">
+import { useI18n } from "vue-i18n";
 import { ref, reactive } from "vue";
 import Motion from "../utils/motion";
+import { message } from "@/utils/message";
 import { updateRules } from "../utils/rule";
-import { message } from "@pureadmin/components";
 import type { FormInstance } from "element-plus";
 import { useVerifyCode } from "../utils/verifyCode";
-import { useUserStoreHook } from "/@/store/modules/user";
-import { useRenderIcon } from "/@/components/ReIcon/src/hooks";
+import { $t, transformI18n } from "@/plugins/i18n";
+import { useUserStoreHook } from "@/store/modules/user";
+import { useRenderIcon } from "@/components/ReIcon/src/hooks";
+import Lock from "@iconify-icons/ri/lock-fill";
+import Iphone from "@iconify-icons/ep/iphone";
 
+const { t } = useI18n();
 const loading = ref(false);
 const ruleForm = reactive({
   phone: "",
@@ -21,9 +26,9 @@ const repeatPasswordRule = [
   {
     validator: (rule, value, callback) => {
       if (value === "") {
-        callback(new Error("请输入确认密码"));
+        callback(new Error(transformI18n($t("login.passwordSureReg"))));
       } else if (ruleForm.password !== value) {
-        callback(new Error("两次密码不一致!"));
+        callback(new Error(transformI18n($t("login.passwordDifferentReg"))));
       } else {
         callback();
       }
@@ -39,7 +44,9 @@ const onUpdate = async (formEl: FormInstance | undefined) => {
     if (valid) {
       // 模拟请求，需根据实际开发进行修改
       setTimeout(() => {
-        message.success("修改密码成功");
+        message(transformI18n($t("login.passwordUpdateReg")), {
+          type: "success"
+        });
         loading.value = false;
       }, 2000);
     } else {
@@ -67,8 +74,8 @@ function onBack() {
         <el-input
           clearable
           v-model="ruleForm.phone"
-          placeholder="手机号码"
-          :prefix-icon="useRenderIcon('iphone')"
+          :placeholder="t('login.phone')"
+          :prefix-icon="useRenderIcon(Iphone)"
         />
       </el-form-item>
     </Motion>
@@ -79,17 +86,19 @@ function onBack() {
           <el-input
             clearable
             v-model="ruleForm.verifyCode"
-            placeholder="短信验证码"
-            :prefix-icon="
-              useRenderIcon('ri:shield-keyhole-line', { online: true })
-            "
+            :placeholder="t('login.smsVerifyCode')"
+            :prefix-icon="useRenderIcon('ri:shield-keyhole-line')"
           />
           <el-button
             :disabled="isDisabled"
             class="ml-2"
             @click="useVerifyCode().start(ruleFormRef, 'phone')"
           >
-            {{ text }}
+            {{
+              text.length > 0
+                ? text + t("login.info")
+                : t("login.getVerifyCode")
+            }}
           </el-button>
         </div>
       </el-form-item>
@@ -101,8 +110,8 @@ function onBack() {
           clearable
           show-password
           v-model="ruleForm.password"
-          placeholder="密码"
-          :prefix-icon="useRenderIcon('lock')"
+          :placeholder="t('login.password')"
+          :prefix-icon="useRenderIcon(Lock)"
         />
       </el-form-item>
     </Motion>
@@ -113,8 +122,8 @@ function onBack() {
           clearable
           show-password
           v-model="ruleForm.repeatPassword"
-          placeholder="确认密码"
-          :prefix-icon="useRenderIcon('lock')"
+          :placeholder="t('login.sure')"
+          :prefix-icon="useRenderIcon(Lock)"
         />
       </el-form-item>
     </Motion>
@@ -128,7 +137,7 @@ function onBack() {
           :loading="loading"
           @click="onUpdate(ruleFormRef)"
         >
-          确定
+          {{ t("login.definite") }}
         </el-button>
       </el-form-item>
     </Motion>
@@ -136,7 +145,7 @@ function onBack() {
     <Motion :delay="300">
       <el-form-item>
         <el-button class="w-full" size="default" @click="onBack">
-          返回
+          {{ t("login.back") }}
         </el-button>
       </el-form-item>
     </Motion>

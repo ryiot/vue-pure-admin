@@ -1,17 +1,20 @@
 <script setup lang="ts">
-import noServer from "/@/assets/status/500.svg?component";
+import { useRouter } from "vue-router";
+import noServer from "@/assets/status/500.svg?component";
 
 defineOptions({
   name: "500"
 });
+
+const router = useRouter();
 </script>
 
 <template>
-  <div class="flex justify-center items-center h-screen-sm">
+  <div class="flex justify-center items-center h-[640px]">
     <noServer />
     <div class="ml-12">
       <p
-        class="font-medium text-4xl mb-4"
+        class="font-medium text-4xl mb-4 dark:text-white"
         v-motion
         :initial="{
           opacity: 0,
@@ -46,7 +49,7 @@ defineOptions({
       </p>
       <el-button
         type="primary"
-        @click="$router.push('/')"
+        @click="router.push('/')"
         v-motion
         :initial="{
           opacity: 0,

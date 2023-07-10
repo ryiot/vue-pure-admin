@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { Amap } from "/@/components/ReMap";
+import { Amap } from "@/components/ReMap";
 
 defineOptions({
-  name: "Map"
+  name: "MapPage"
 });
 </script>
 

@@ -1,51 +1,59 @@
 <script setup lang="ts">
-import { ReGithub, ReInfinite, RePie, ReLine, ReBar } from "./components";
-import { ref, computed } from "vue";
-import avatars from "/@/assets/avatars.jpg";
+import dayjs from "dayjs";
+import MdEditor from "md-editor-v3";
+import Bar from "./components/Bar.vue";
+import Pie from "./components/Pie.vue";
+import Line from "./components/Line.vue";
+import { getReleases } from "@/api/list";
+import TypeIt from "@/components/ReTypeit";
+import { useWindowSize } from "@vueuse/core";
+import { ref, computed, markRaw } from "vue";
+import Github from "./components/Github.vue";
+import { randomColor } from "@pureadmin/utils";
+import { useRenderFlicker } from "@/components/ReFlicker";
 
 defineOptions({
   name: "Welcome"
 });
 
-const date: Date = new Date();
-let loading = ref<boolean>(true);
+const list = ref();
+const loading = ref<boolean>(true);
+const { version } = __APP_INFO__.pkg;
+const titleClass = computed(() => {
+  return ["text-base", "font-medium"];
+});
+
+const { height } = useWindowSize();
 
 setTimeout(() => {
   loading.value = !loading.value;
 }, 800);
 
-let greetings = computed(() => {
-  if (date.getHours() >= 0 && date.getHours() < 12) {
-    return "上午阳光明媚，祝你薪水翻倍🌞！";
-  } else if (date.getHours() >= 12 && date.getHours() < 18) {
-    return "下午小风娇好，愿你青春不老😃！";
-  } else {
-    return "折一根天使羽毛，愿拂去您的疲惫烦恼忧伤🌛！";
-  }
+getReleases().then(({ data }) => {
+  list.value = data.list.map(v => {
+    return {
+      content: v.body,
+      timestamp: dayjs(v.published_at).format("YYYY/MM/DD hh:mm:ss A"),
+      icon: markRaw(
+        useRenderFlicker({
+          background: randomColor({ type: "hex" }) as string
+        })
+      )
+    };
+  });
 });
-
-const openDepot = (): void => {
-  window.open("https://github.com/xiaoxian521/vue-pure-admin");
-};
 </script>
 
 <template>
-  <div class="welcome">
-    <el-card class="top-content">
-      <div class="left-mark">
-        <img :src="avatars" title="直达仓库地址" @click="openDepot" />
-        <span>{{ greetings }}</span>
-      </div>
-    </el-card>
-
-    <el-row :gutter="24" style="margin: 20px">
+  <div>
+    <el-row :gutter="24">
       <el-col
         :xs="24"
         :sm="24"
         :md="12"
         :lg="12"
         :xl="12"
-        style="margin-bottom: 20px"
+        class="mb-[18px]"
         v-motion
         :initial="{
           opacity: 0,
@@ -59,13 +67,39 @@ const openDepot = (): void => {
           }
         }"
       >
-        <el-card style="height: 360px">
+        <el-card
+          shadow="never"
+          :style="{ height: `calc(${height}px - 35vh - 250px)` }"
+        >
           <template #header>
-            <span style="font-size: 16px; font-weight: 500">GitHub信息</span>
+            <a
+              :class="titleClass"
+              href="https://github.com/pure-admin/vue-pure-admin/releases"
+              target="_black"
+            >
+              <TypeIt
+                :className="'type-it2'"
+                :values="[`PureAdmin 版本日志（当前版本 v${version}）`]"
+                :cursor="false"
+                :speed="60"
+              />
+            </a>
           </template>
           <el-skeleton animated :rows="7" :loading="loading">
             <template #default>
-              <ReGithub />
+              <el-scrollbar :height="`calc(${height}px - 35vh - 340px)`">
+                <el-timeline v-show="list?.length > 0">
+                  <el-timeline-item
+                    v-for="(item, index) in list"
+                    :key="index"
+                    :icon="item.icon"
+                    :timestamp="item.timestamp"
+                  >
+                    <md-editor v-model="item.content" preview-only />
+                  </el-timeline-item>
+                </el-timeline>
+                <el-empty v-show="list?.length === 0" />
+              </el-scrollbar>
             </template>
           </el-skeleton>
         </el-card>
@@ -77,7 +111,7 @@ const openDepot = (): void => {
         :md="12"
         :lg="12"
         :xl="12"
-        style="margin-bottom: 20px"
+        class="mb-[18px]"
         v-motion
         :initial="{
           opacity: 0,
@@ -91,15 +125,29 @@ const openDepot = (): void => {
           }
         }"
       >
-        <el-card style="height: 360px">
+        <el-card
+          shadow="never"
+          :style="{ height: `calc(${height}px - 35vh - 250px)` }"
+        >
           <template #header>
-            <span style="font-size: 16px; font-weight: 500">
-              GitHub滚动信息
-            </span>
+            <a
+              :class="titleClass"
+              href="https://github.com/xiaoxian521"
+              target="_black"
+            >
+              <TypeIt
+                :className="'type-it1'"
+                :values="['GitHub信息']"
+                :cursor="false"
+                :speed="120"
+              />
+            </a>
           </template>
           <el-skeleton animated :rows="7" :loading="loading">
             <template #default>
-              <ReInfinite />
+              <el-scrollbar :height="`calc(${height}px - 35vh - 340px)`">
+                <Github />
+              </el-scrollbar>
             </template>
           </el-skeleton>
         </el-card>
@@ -111,7 +159,7 @@ const openDepot = (): void => {
         :md="12"
         :lg="8"
         :xl="8"
-        style="margin-bottom: 20px"
+        class="mb-[18px]"
         v-motion
         :initial="{
           opacity: 0,
@@ -125,15 +173,24 @@ const openDepot = (): void => {
           }
         }"
       >
-        <el-card>
+        <el-card shadow="never">
           <template #header>
-            <span style="font-size: 16px; font-weight: 500">
-              GitHub饼图信息
-            </span>
+            <a
+              :class="titleClass"
+              href="https://github.com/pure-admin/vue-pure-admin"
+              target="_black"
+            >
+              <TypeIt
+                :className="'type-it4'"
+                :values="['GitHub折线图信息']"
+                :cursor="false"
+                :speed="120"
+              />
+            </a>
           </template>
           <el-skeleton animated :rows="7" :loading="loading">
             <template #default>
-              <RePie />
+              <Line />
             </template>
           </el-skeleton>
         </el-card>
@@ -145,7 +202,7 @@ const openDepot = (): void => {
         :md="12"
         :lg="8"
         :xl="8"
-        style="margin-bottom: 20px"
+        class="mb-[18px]"
         v-motion
         :initial="{
           opacity: 0,
@@ -159,15 +216,24 @@ const openDepot = (): void => {
           }
         }"
       >
-        <el-card>
+        <el-card shadow="never">
           <template #header>
-            <span style="font-size: 16px; font-weight: 500">
-              GitHub折线图信息
-            </span>
+            <a
+              :class="titleClass"
+              href="https://github.com/pure-admin/vue-pure-admin"
+              target="_black"
+            >
+              <TypeIt
+                :className="'type-it3'"
+                :values="['GitHub饼图信息']"
+                :cursor="false"
+                :speed="120"
+              />
+            </a>
           </template>
           <el-skeleton animated :rows="7" :loading="loading">
             <template #default>
-              <ReLine />
+              <Pie />
             </template>
           </el-skeleton>
         </el-card>
@@ -179,7 +245,7 @@ const openDepot = (): void => {
         :md="24"
         :lg="8"
         :xl="8"
-        style="margin-bottom: 20px"
+        class="mb-[18px]"
         v-motion
         :initial="{
           opacity: 0,
@@ -193,15 +259,24 @@ const openDepot = (): void => {
           }
         }"
       >
-        <el-card>
+        <el-card shadow="never">
           <template #header>
-            <span style="font-size: 16px; font-weight: 500">
-              GitHub柱状图信息
-            </span>
+            <a
+              :class="titleClass"
+              href="https://github.com/pure-admin/vue-pure-admin"
+              target="_black"
+            >
+              <TypeIt
+                :className="'type-it5'"
+                :values="['GitHub柱状图信息']"
+                :cursor="false"
+                :speed="120"
+              />
+            </a>
           </template>
           <el-skeleton animated :rows="7" :loading="loading">
             <template #default>
-              <ReBar />
+              <Bar />
             </template>
           </el-skeleton>
         </el-card>
@@ -210,44 +285,12 @@ const openDepot = (): void => {
   </div>
 </template>
 
-<style module scoped>
-.size {
-  height: 335px;
-}
-</style>
-
 <style lang="scss" scoped>
-.main-content {
-  margin: 0 !important;
+:deep(.el-timeline-item) {
+  margin: 6px 0 0 6px;
 }
 
-.welcome {
-  height: 100%;
-
-  .top-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: 60px;
-    background: #fff;
-
-    .left-mark {
-      display: flex;
-      align-items: center;
-
-      img {
-        display: block;
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-        margin-right: 10px;
-        cursor: pointer;
-      }
-
-      span {
-        font-size: 14px;
-      }
-    }
-  }
+.main-content {
+  margin: 20px 20px 0 !important;
 }
 </style>

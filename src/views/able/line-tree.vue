@@ -1,26 +1,28 @@
 <script setup lang="ts">
 import { computed } from "vue";
-import { transformI18n } from "/@/plugins/i18n";
-import ElTreeLine from "/@/components/ReTreeLine";
-import { extractPathList, deleteChildren } from "/@/utils/tree";
-import { usePermissionStoreHook } from "/@/store/modules/permission";
+import { clone } from "@pureadmin/utils";
+import { transformI18n } from "@/plugins/i18n";
+import ElTreeLine from "@/components/ReTreeLine";
+import { extractPathList, deleteChildren } from "@/utils/tree";
+import { usePermissionStoreHook } from "@/store/modules/permission";
 
 defineOptions({
   name: "LineTree"
 });
 
-let menusData = computed(() => {
-  return deleteChildren(usePermissionStoreHook().menusTree);
+const menusTree = clone(usePermissionStoreHook().wholeMenus, true);
+const menusData = computed(() => {
+  return deleteChildren(menusTree);
 });
-let expandedKeys = extractPathList(menusData.value);
-let dataProps = {
+const expandedKeys = extractPathList(menusData.value);
+const dataProps = {
   value: "uniqueId",
   children: "children"
 };
 </script>
 
 <template>
-  <el-card>
+  <el-card shadow="never">
     <template #header>
       <div class="card-header">
         <span class="font-medium">
@@ -30,14 +32,14 @@ let dataProps = {
     </template>
 
     <el-row :gutter="24">
-      <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12" class="mb-20px">
-        <el-card>
+      <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12" class="mb-[20px]">
+        <el-card shadow="never">
           <template #header>
             <div class="card-header">
               <span class="font-medium"> 普通树结构 </span>
             </div>
           </template>
-          <div class="max-h-550px overflow-y-auto">
+          <div class="max-h-[550px] overflow-y-auto">
             <el-tree
               :data="menusData"
               :props="dataProps"
@@ -60,13 +62,13 @@ let dataProps = {
       </el-col>
 
       <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
-        <el-card>
+        <el-card shadow="never">
           <template #header>
             <div class="card-header">
               <span class="font-medium"> 虚拟树结构 </span>
             </div>
           </template>
-          <div class="max-h-550px overflow-y-auto">
+          <div class="max-h-[550px] overflow-y-auto">
             <el-tree-v2
               :data="menusData"
               :props="dataProps"

@@ -1,7 +1,8 @@
 // 多组件库的国际化和本地项目国际化兼容
 import { App, WritableComputedRef } from "vue";
-import { storageLocal } from "/@/utils/storage";
+import { storageLocal } from "@pureadmin/utils";
 import { type I18n, createI18n } from "vue-i18n";
+import { responsiveStorageNameSpace } from "@/config";
 
 // element-plus国际化
 import enLocale from "element-plus/lib/locale/lang/en";
@@ -9,12 +10,12 @@ import zhLocale from "element-plus/lib/locale/lang/zh-cn";
 
 function siphonI18n(prefix = "zh-CN") {
   return Object.fromEntries(
-    Object.entries(import.meta.globEager("../../locales/*.y(a)?ml")).map(
-      ([key, value]) => {
-        const matched = key.match(/([A-Za-z0-9-_]+)\./i)[1];
-        return [matched, value.default];
-      }
-    )
+    Object.entries(
+      import.meta.glob("../../locales/*.y(a)?ml", { eager: true })
+    ).map(([key, value]: any) => {
+      const matched = key.match(/([A-Za-z0-9-_]+)\./i)[1];
+      return [matched, value.default];
+    })
   )[prefix];
 }
 
@@ -57,12 +58,15 @@ export function transformI18n(message: any = "") {
   }
 }
 
-// 此函数只是配合i18n Ally插件来进行国际化智能提示，并无实际意义（只对提示起作用），如果不需要国际化可删除
+/** 此函数只是配合i18n Ally插件来进行国际化智能提示，并无实际意义（只对提示起作用），如果不需要国际化可删除 */
 export const $t = (key: string) => key;
 
 export const i18n: I18n = createI18n({
   legacy: false,
-  locale: storageLocal.getItem("responsive-locale")?.locale ?? "zh",
+  locale:
+    storageLocal().getItem<StorageConfigs>(
+      `${responsiveStorageNameSpace()}locale`
+    )?.locale ?? "zh",
   fallbackLocale: "en",
   messages: localesConfigs
 });
